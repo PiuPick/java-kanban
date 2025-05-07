@@ -52,26 +52,22 @@ public class TaskManager {
         epic.setStatus(Status.DONE);
     }
 
-    public Task createTask(Task task) {
+    public void createTask(Task task) {
         task.setId(getNewId());
         tasks.put(task.getId(), task);
-        return task;
     }
 
-    public Epic createEpic(Epic epic) {
+    public void createEpic(Epic epic) {
         epic.setId(getNewId());
         epics.put(epic.getId(), epic);
-        return epic;
     }
 
-    public Subtask createSubtask(Subtask subtask) {
+    public void createSubtask(Subtask subtask) {
         subtask.setId(getNewId());
         subtasks.put(subtask.getId(), subtask);
 
         subtask.getEpic().getSubtasks().add(subtask.getId());
         subtask.getEpic().setSubtask(subtask.getEpic().getSubtasks());
-
-        return subtask;
     }
 
     public ArrayList<Task> getTasks() {
@@ -140,10 +136,6 @@ public class TaskManager {
 
         subtasks.remove(id);
         checkStatus(epic);
-    }
-
-    public ArrayList<Integer> getSubtasks(int id) {
-        return epics.get(id).getSubtasks();
     }
 
     private int getNewId() {

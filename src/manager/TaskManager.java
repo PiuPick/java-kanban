@@ -17,7 +17,6 @@ public class TaskManager {
             checkStatus(subtasks.get(task.getId()).getEpic());
         } else if (task.getType() == TaskType.EPIC) {
             epics.put(task.getId(), (Epic) task);
-            checkStatus(epics.get(task.getId()));
         } else {
             tasks.put(task.getId(), task);
         }

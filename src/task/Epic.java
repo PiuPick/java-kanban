@@ -13,12 +13,7 @@ public class Epic extends Task {
         this.subtasks = childTasks;
     }
 
-    public void setSubtask(Integer subtask) {
-        subtasks.add(subtask);
-    }
-
     public ArrayList<Integer> getSubtasks() {
-        final ArrayList<Integer> clone = (ArrayList<Integer>) subtasks.clone();
-        return clone;
+        return subtasks;
     }
 }

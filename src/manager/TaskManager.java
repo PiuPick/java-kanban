@@ -100,18 +100,15 @@ public class TaskManager {
     }
 
     public Task getTaskById(int id) {
-        final Task task = tasks.get(id);
-        return task;
+        return tasks.get(id);
     }
 
     public Epic getEpicById(int id) {
-        final Epic epic = epics.get(id);
-        return epic;
+        return epics.get(id);
     }
 
     public Subtask getSubtaskById(int id) {
-        final Subtask subtask = subtasks.get(id);
-        return subtask;
+        return subtasks.get(id);
     }
 
     public void deleteTaskById(int id) {

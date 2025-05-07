@@ -1,4 +1,6 @@
-package model;
+package task;
+
+import manager.TaskManager;
 
 public class Task {
     private final int id;

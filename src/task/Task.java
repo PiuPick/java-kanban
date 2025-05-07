@@ -14,6 +14,13 @@ public class Task {
         this.description = description;
     }
 
+    public Task(String name, String description, Status status) {
+        this.id = TaskManager.getNewId();
+        this.name = name;
+        this.status = status;
+        this.description = description;
+    }
+
     public String getName() {
         return name;
     }

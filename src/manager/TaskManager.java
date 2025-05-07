@@ -76,7 +76,8 @@ public class TaskManager {
 
     public Subtask createSubtask(Epic epic, String name, String description) {
         Subtask subtask = new Subtask(name, description, epic);
-        epic.setSubtask(subtask.getId());
+        ArrayList<Integer> subtaskId = new ArrayList<>();
+        epic.setSubtask(subtaskId);
         updateTask(subtask);
 
         return subtask;

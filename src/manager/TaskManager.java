@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TaskManager {
-    private static int id = 0;
+    private int counter = 0;
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private HashMap<Integer, Epic> epics = new HashMap<>();
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
@@ -57,21 +57,21 @@ public class TaskManager {
     }
 
     public Task createTask(Task task) {
-        task.setId(++id);
-        tasks.put(id, task);
+        task.setId(++counter);
+        tasks.put(counter, task);
         return task;
     }
 
     public Task createTask(String name, String description) {
         Task task = new Task(name, description);
-        task.setId(++id);
-        tasks.put(id, task);
+        task.setId(++counter);
+        tasks.put(counter, task);
         return task;
     }
 
     public Epic createEpic(String name, String description) {
         Epic epic = new Epic(name, description);
-        epic.setId(++id);
+        epic.setId(++counter);
         updateTask(epic);
 
         return epic;
@@ -79,9 +79,9 @@ public class TaskManager {
 
     public Subtask createSubtask(Epic epic, String name, String description) {
         Subtask subtask = new Subtask(name, description, epic);
-        subtask.setId(++id);
+        subtask.setId(++counter);
         ArrayList<Integer> subtaskId = new ArrayList<>();
-        subtaskId.add(id);
+        subtaskId.add(counter);
         epic.setSubtask(subtaskId);
         updateTask(subtask);
 

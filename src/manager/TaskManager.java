@@ -58,29 +58,15 @@ public class TaskManager {
         return task;
     }
 
-    public Task createTask(String name, String description) {
-        Task task = new Task(name, description);
-        task.setId(++counter);
-        tasks.put(counter, task);
-        return task;
-    }
-
-    public Epic createEpic(String name, String description) {
-        Epic epic = new Epic(name, description);
+    public Epic createEpic(Epic epic) {
         epic.setId(++counter);
-        updateTask(epic);
-
+        epics.put(counter, epic);
         return epic;
     }
 
-    public Subtask createSubtask(Epic epic, String name, String description) {
-        Subtask subtask = new Subtask(name, description, epic);
+    public Subtask createSubtask(Subtask subtask) {
         subtask.setId(++counter);
-        ArrayList<Integer> subtaskId = new ArrayList<>();
-        subtaskId.add(counter);
-        epic.setSubtask(subtaskId);
-        updateTask(subtask);
-
+        subtasks.put(counter, subtask);
         return subtask;
     }
 

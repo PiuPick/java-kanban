@@ -9,13 +9,18 @@ public class Main {
         TaskManager mgr = new TaskManager();
 
         // 1) Создание двух независимых тасков:
-        Task t1 = mgr.createTask("Переезд", "Упаковать вещи");
-        Task t2 = mgr.createTask("Проверка почты", "Ответить на письма");
+        Task t1 = new Task("Переезд", "Упаковать вещи");
+        Task t2 = new Task("Проверка почты", "Ответить на письма");
+        mgr.createTask(t1);
+        mgr.createTask(t2);
 
         // 2) Один эпик с двумя подзадачами:
-        Epic epic1 = mgr.createEpic("Организовать праздник", "Большой семейный банкет");
-        Subtask s1 = mgr.createSubtask(epic1, "Закупить продукты", "Составить список блюд");
-        Subtask s2 = mgr.createSubtask(epic1, "Заказать торт", "Выбрать дизайн");
+        Epic epic1 = new Epic("Организовать праздник", "Большой семейный банкет");
+        mgr.createEpic(epic1);
+        Subtask s1 = new Subtask(epic1, "Закупить продукты", "Составить список блюд");
+        Subtask s2 = new Subtask(epic1, "Заказать торт", "Выбрать дизайн");
+        mgr.createSubtask(s1);
+        mgr.createSubtask(s2);
 
         // 3) Вывести все списки:
         System.out.println("Tasks: " + mgr.getTasks().values());

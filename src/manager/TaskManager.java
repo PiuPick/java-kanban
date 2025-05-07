@@ -1,9 +1,6 @@
 package manager;
 
-import task.Epic;
-import task.Status;
-import task.Subtask;
-import task.Task;
+import task.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,12 +12,12 @@ public class TaskManager {
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
     public void updateTask(Task task) {
-        if (task instanceof Subtask subtask) {
-            subtasks.put(subtask.getId(), subtask);
-            checkStatus(subtask.getEpic());
-        } else if (task instanceof Epic epic) {
-            epics.put(epic.getId(), epic);
-            checkStatus(epic);
+        if (task.getType() == TaskType.SUBTASK) {
+            subtasks.put(task.getId(), (Subtask) task);
+            checkStatus(subtasks.get(task.getId()).getEpic());
+        } else if (task.getType() == TaskType.EPIC) {
+            epics.put(task.getId(), (Epic) task);
+            checkStatus(epics.get(task.getId()));
         } else {
             tasks.put(task.getId(), task);
         }

@@ -1,12 +1,14 @@
 package task;
 
-import manager.TaskManager;
-
 public class Task {
     private int id;
     private String name;
     private String description;
     private Status status = Status.NEW;
+
+    public TaskType getType() {
+        return TaskType.TASK;
+    }
 
     public Task(String name, String description) {
         this.name = name;

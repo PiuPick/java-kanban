@@ -76,8 +76,8 @@ public class TaskManager {
         subtask.setId(getNewId());
         subtasks.put(subtask.getId(), subtask);
 
-        subtask.getEpic().getSubtasks().add(subtask.getId());
-        subtask.getEpic().setSubtask(subtask.getEpic().getSubtasks());
+        subtask.getEpic().addSubtaskId(subtask.getId());
+        calculateStatus(subtask.getEpic());
     }
 
     public ArrayList<Task> getTasks() {
@@ -131,6 +131,8 @@ public class TaskManager {
         for (Integer subtask : subtasksEpic) {
             subtasks.remove(subtask);
         }
+
+        subtasksEpic.clear();
     }
 
     public void deleteSubtaskById(int id) {

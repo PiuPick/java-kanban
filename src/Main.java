@@ -23,9 +23,9 @@ public class Main {
         mgr.createSubtask(s2);
 
         // 3) Вывести все списки:
-        System.out.println("Tasks: " + mgr.getTasks().values());
-        System.out.println("Epics: " + mgr.getEpics().values());
-        System.out.println("Subtasks: " + mgr.getSubtasks().values());
+        System.out.println("Tasks: " + mgr.getTasks());
+        System.out.println("Epics: " + mgr.getEpics());
+        System.out.println("Subtasks: " + mgr.getSubtasks());
 
         // 4) Изменить статус, проверить пересчёт статуса эпика:
         s1.setStatus(Status.DONE);

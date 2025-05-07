@@ -70,19 +70,16 @@ public class TaskManager {
         return subtask;
     }
 
-    public HashMap<Integer, Task> getTasks() {
-        final HashMap<Integer, Task> integerTaskHashMap = new HashMap<>(tasks);
-        return integerTaskHashMap;
+    public ArrayList<Task> getTasks() {
+        return new ArrayList<>(tasks.values());
     }
 
-    public HashMap<Integer, Epic> getEpics() {
-        final HashMap<Integer, Epic> integerEpicHashMap = new HashMap<>(epics);
-        return integerEpicHashMap;
+    public ArrayList<Epic> getEpics() {
+        return new ArrayList<>(epics.values());
     }
 
-    public HashMap<Integer, Subtask> getSubtasks() {
-        final HashMap<Integer, Subtask> integerSubtaskHashMap = new HashMap<>(subtasks);
-        return integerSubtaskHashMap;
+    public ArrayList<Subtask> getSubtasks() {
+        return new ArrayList<>(subtasks.values());
     }
 
     public void clearTasks() {

@@ -104,7 +104,7 @@ public class TaskManager {
     public void clearSubtasks() {
         subtasks.clear();
         for (Epic epic : epics.values()) {
-            epic.setSubtask(new ArrayList<>());
+            epic.getSubtasks().clear();
             calculateStatus(epic);
         }
     }
@@ -144,7 +144,7 @@ public class TaskManager {
             }
         }
 
-        epic.setSubtask(epic.getSubtasks());
+        epic.getSubtasks().clear();
 
         subtasks.remove(id);
         calculateStatus(epic);

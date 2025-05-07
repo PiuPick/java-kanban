@@ -53,20 +53,20 @@ public class TaskManager {
     }
 
     public Task createTask(Task task) {
-        task.setId(++counter);
-        tasks.put(counter, task);
+        task.setId(getNewId());
+        tasks.put(task.getId(), task);
         return task;
     }
 
     public Epic createEpic(Epic epic) {
-        epic.setId(++counter);
-        epics.put(counter, epic);
+        epic.setId(getNewId());
+        epics.put(epic.getId(), epic);
         return epic;
     }
 
     public Subtask createSubtask(Subtask subtask) {
-        subtask.setId(++counter);
-        subtasks.put(counter, subtask);
+        subtask.setId(getNewId());
+        subtasks.put(subtask.getId(), subtask);
         return subtask;
     }
 
@@ -134,5 +134,9 @@ public class TaskManager {
 
     public ArrayList<Integer> getSubtasks(int id) {
         return epics.get(id).getSubtasks();
+    }
+
+    private int getNewId() {
+        return ++counter;
     }
 }

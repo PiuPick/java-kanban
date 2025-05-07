@@ -132,10 +132,6 @@ public class TaskManager {
         checkStatus(epic);
     }
 
-    public ArrayList<Integer> getSubtasks(Epic task) {
-        return task.getSubtasks();
-    }
-
     public ArrayList<Integer> getSubtasks(int id) {
         return epics.get(id).getSubtasks();
     }

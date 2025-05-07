@@ -9,8 +9,8 @@ public class Epic extends Task {
         super(name, description);
     }
 
-    public void setSubtask(ArrayList<Integer> childTasks) {
-        this.subtasks = childTasks;
+    public void setSubtask(ArrayList<Integer> subtasks) {
+        this.subtasks = subtasks;
     }
 
     public ArrayList<Integer> getSubtasks() {

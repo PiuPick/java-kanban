@@ -93,6 +93,10 @@ public class TaskManager {
 
     public void clearSubtasks() {
         subtasks.clear();
+        for (Epic epic : epics.values()) {
+            epic.setSubtask(new ArrayList<>());
+            checkStatus(epic);
+        }
     }
 
     public Task getTaskById(int id) {

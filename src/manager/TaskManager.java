@@ -116,23 +116,19 @@ public class TaskManager {
     }
 
     public void deleteEpicById(int id) {
-        ArrayList<Integer> subtasksEpic = epics.get(id).getSubtasks();
+        ArrayList<Integer> subtasksEpic = epics.remove(id).getSubtasks();
 
         for (Integer subtask : subtasksEpic) {
             subtasks.remove(subtask);
         }
-
-        epics.remove(id);
     }
 
     public void deleteSubtaskById(int id) {
         Epic epic = subtasks.get(id).getEpic();
-        ArrayList<Integer> subtasksNew = epic.getSubtasks();
-        subtasksNew.remove(subtasks.get(id));
-        epic.setSubtask(subtasksNew);
+        epic.getSubtasks().remove(id);
+        epic.setSubtask(epic.getSubtasks());
 
         subtasks.remove(id);
-
         checkStatus(epic);
     }
 

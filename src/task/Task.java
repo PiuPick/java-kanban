@@ -3,19 +3,17 @@ package task;
 import manager.TaskManager;
 
 public class Task {
-    private final int id;
+    private int id;
     private String name;
     private String description;
     private Status status = Status.NEW;
 
     public Task(String name, String description) {
-        this.id = TaskManager.getNewId();
         this.name = name;
         this.description = description;
     }
 
     public Task(String name, String description, Status status) {
-        this.id = TaskManager.getNewId();
         this.name = name;
         this.status = status;
         this.description = description;
@@ -47,6 +45,10 @@ public class Task {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

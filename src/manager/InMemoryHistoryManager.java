@@ -18,6 +18,9 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (tasksHistory.size() == 10) {
             tasksHistory.removeFirst();
         }
-        tasksHistory.add(task);
+        Task cloneTask = new Task(task.getName(), task.getDescription());
+        cloneTask.setId(task.getId());
+
+        tasksHistory.add(cloneTask);
     }
 }

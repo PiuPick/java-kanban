@@ -53,6 +53,13 @@ public class Task {
         this.id = id;
     }
 
+    public Task cloneTask() {
+        Task clone = new Task(this.getName(), this.getDescription());
+        clone.setId(this.getId());
+        clone.setStatus(this.getStatus());
+        return clone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

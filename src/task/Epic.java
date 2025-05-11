@@ -18,6 +18,19 @@ public class Epic extends Task {
     }
 
     @Override
+    public Epic cloneTask() {
+        Epic clone = new Epic(this.getName(), this.getDescription());
+        clone.setId(this.getId());
+        clone.setStatus(this.getStatus());
+
+        for (Integer subtask : subtasks) {
+            clone.addSubtaskId(subtask);
+        }
+
+        return clone;
+    }
+
+    @Override
     public TaskType getType() {
         return TaskType.EPIC;
     }

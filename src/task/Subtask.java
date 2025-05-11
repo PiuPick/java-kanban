@@ -18,6 +18,11 @@ public class Subtask extends Task {
     }
 
     @Override
+    public Subtask cloneTask() {
+        return new Subtask(this.getEpic().cloneTask(), this.getName(), this.getDescription(), this.getStatus());
+    }
+
+    @Override
     public TaskType getType() {
         return TaskType.SUBTASK;
     }

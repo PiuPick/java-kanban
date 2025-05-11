@@ -7,14 +7,14 @@ import task.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
-    private static InMemoryTaskManager taskManager;
+    private static TaskManager taskManager;
     private static Task task;
     private static Epic epic;
     private static Subtask subtask;
 
     @BeforeAll
     public static void beforeAll() {
-        taskManager = new InMemoryTaskManager();
+        taskManager = Managers.getDefault();
 
         task = new Task("Задача", "Описание");
         taskManager.createTask(task);

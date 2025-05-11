@@ -1,4 +1,4 @@
-import manager.InMemoryTaskManager;
+import manager.Managers;
 import manager.TaskManager;
 import task.*;
 
@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Поехали!\n");
 
-        TaskManager taskManager = new InMemoryTaskManager();
+        TaskManager taskManager = Managers.getDefault();
 
         System.out.println("1) Создание двух независимых задач");
         Task movingTask = new Task("Переезд", "Упаковать вещи");

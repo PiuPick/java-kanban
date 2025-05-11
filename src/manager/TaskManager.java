@@ -5,7 +5,7 @@ import task.Subtask;
 import task.Task;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 public interface TaskManager {
     ArrayList<Subtask> getSubtasks(int idEpic);
@@ -42,5 +42,5 @@ public interface TaskManager {
 
     void deleteSubtaskById(int id);
 
-    List<Task> getHistory();
+    LinkedList<Task> getHistory();
 }

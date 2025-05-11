@@ -6,9 +6,10 @@ import task.Task;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public interface TaskManager {
-    ArrayList<Subtask> getSubtasks(int idEpic);
+    List<Subtask> getSubtasks(int idEpic);
 
     void updateTask(Task task);
 
@@ -18,11 +19,11 @@ public interface TaskManager {
 
     void createSubtask(Subtask subtask);
 
-    ArrayList<Task> getTasks();
+    List<Task> getTasks();
 
-    ArrayList<Epic> getEpics();
+    List<Epic> getEpics();
 
-    ArrayList<Subtask> getSubtasks();
+    List<Subtask> getSubtasks();
 
     void clearTasks();
 

@@ -2,20 +2,18 @@ package manager;
 
 import task.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private int counter = 0;
-    private HashMap<Integer, Task> tasks = new HashMap<>();
-    private HashMap<Integer, Epic> epics = new HashMap<>();
-    private HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    private HistoryManager historyManager = Managers.getDefaultHistory();
+    private final Map<Integer, Task> tasks = new HashMap<>();
+    private final Map<Integer, Epic> epics = new HashMap<>();
+    private final Map<Integer, Subtask> subtasks = new HashMap<>();
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
-    public ArrayList<Subtask> getSubtasks(int idEpic) {
-        ArrayList<Subtask> subtasksEpic = new ArrayList<>();
+    public List<Subtask> getSubtasks(int idEpic) {
+        List<Subtask> subtasksEpic = new ArrayList<>();
 
         for (Integer idSubtask : epics.get(idEpic).getSubtasks()) {
             subtasksEpic.add(subtasks.get(idSubtask));
@@ -37,7 +35,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void calculateStatus(Epic epic) {
-        ArrayList<Integer> subtasks = epic.getSubtasks();
+        List<Integer> subtasks = epic.getSubtasks();
 
         if (subtasks.isEmpty()) {
             epic.setStatus(Status.NEW);
@@ -88,17 +86,17 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Task> getTasks() {
+    public List<Task> getTasks() {
         return new ArrayList<>(tasks.values());
     }
 
     @Override
-    public ArrayList<Epic> getEpics() {
+    public List<Epic> getEpics() {
         return new ArrayList<>(epics.values());
     }
 
     @Override
-    public ArrayList<Subtask> getSubtasks() {
+    public List<Subtask> getSubtasks() {
         return new ArrayList<>(subtasks.values());
     }
 

@@ -7,10 +7,10 @@ import task.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
-    public static InMemoryTaskManager taskManager;
-    public static Task task;
-    public static Epic epic;
-    public static Subtask subtask;
+    private static InMemoryTaskManager taskManager;
+    private static Task task;
+    private static Epic epic;
+    private static Subtask subtask;
 
     @BeforeAll
     public static void beforeAll() {

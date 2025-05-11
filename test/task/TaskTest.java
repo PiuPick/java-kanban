@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TaskTest {
-    Epic epic1 = new Epic("Эпик 1", "Описание");
-    Epic epic2 = new Epic("Эпик 2", "Описание");
+    private final Epic epic1 = new Epic("Эпик 1", "Описание");
+    private final Epic epic2 = new Epic("Эпик 2", "Описание");
 
     @Test
     public void equalsTasks() {

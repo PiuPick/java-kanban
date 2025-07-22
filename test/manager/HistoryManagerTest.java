@@ -5,11 +5,11 @@ import task.Task;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HistoryManagerTest {
     @Test
-    void historyShouldKeepPreviousVersionOfTask() {
+    void theHistoryShouldNotContainAPreliminaryVersionOfTheIssue() {
         TaskManager manager = Managers.getDefault();
 
         Task task = new Task("Задача", "Описание");
@@ -22,6 +22,6 @@ class HistoryManagerTest {
 
         List<Task> history = manager.getHistory();
 
-        assertNotEquals(history.get(0).getName(), history.get(1).getName());
+        assertEquals(history.getFirst().getName(), task.getName());
     }
 }

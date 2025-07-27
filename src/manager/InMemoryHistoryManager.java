@@ -5,9 +5,10 @@ import task.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private final HashMap<Integer, Node<Task>> hashMapTasksHistory = new HashMap<>();
+    private final Map<Integer, Node<Task>> hashMapTasksHistory = new HashMap<>();
     private Node<Task> headList;
     private Node<Task> tailList;
     private int sizeList = 0;
@@ -21,17 +22,31 @@ public class InMemoryHistoryManager implements HistoryManager {
     public void add(Task task) {
         if (task == null) return;
 
-        Node<Task> newTask = linkLast(task);
-        removeNode(newTask);
-        hashMapTasksHistory.put(task.getId(), newTask);
+        removeNode(task);
+        hashMapTasksHistory.put(task.getId(), linkLast(task));
     }
 
-    private void removeNode(Node<Task> node) {
-        if (hashMapTasksHistory.containsKey(node.data.getId())) {
-            if (node.prev != null) node.prev.next = node.next;
-            if (node.next != null) node.next.prev = node.prev;
+    @Override
+    public void remove(int id) {
+        removeNode(hashMapTasksHistory.get(id).getData());
+    }
 
-            hashMapTasksHistory.remove(node.data.getId());
+    private void removeNode(Task task) {
+        if (hashMapTasksHistory.containsKey(task.getId())) {
+            Node<Task> node = hashMapTasksHistory.get(task.getId());
+
+            if (node.getPrev() != null) {
+                Node<Task> prev = node.getPrev();
+                prev.setNext(node.getNext());
+            } else {
+                headList = node.getNext();
+            }
+            if (node.getNext() != null) {
+                Node<Task> next = node.getNext();
+                next.setPrev(node.getPrev());
+            }
+
+            hashMapTasksHistory.remove(node.getData().getId());
             --sizeList;
         }
     }
@@ -41,25 +56,25 @@ public class InMemoryHistoryManager implements HistoryManager {
 
         if (sizeList == 0) {
             headList = tailList = newNode;
-            newNode.prev = null;
+            newNode.setPrev(null);
         } else {
-            newNode.prev = tailList;
-            tailList.next = newNode;
+            tailList.setNext(newNode);
+            newNode.setPrev(tailList);
+            tailList = newNode;
         }
-        newNode.next = null;
 
         ++sizeList;
 
         return newNode;
     }
 
-    private ArrayList<Task> getTasks() {
-        ArrayList<Task> tasksArrayList = new ArrayList<>();
+    private List<Task> getTasks() {
+        List<Task> tasksArrayList = new ArrayList<>();
         Node<Task> node = headList;
 
         do {
-            tasksArrayList.add(node.data);
-            node = node.next;
+            tasksArrayList.add(node.getData());
+            node = node.getNext();
         } while (node != null);
 
         return tasksArrayList;

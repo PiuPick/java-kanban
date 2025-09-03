@@ -12,7 +12,7 @@ class ManagersTest {
     }
 
     @Test
-    public void returnedObjectReadyToWork() {
+    public void returnedObjectReadyToWork() throws ManagerSaveException {
         TaskManager taskManager = Managers.getDefault();
         Epic epic = new Epic("Эпик", "Описание");
         taskManager.createEpic(epic);

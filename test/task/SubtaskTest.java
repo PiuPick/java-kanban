@@ -1,5 +1,6 @@
 package task;
 
+import manager.ManagerSaveException;
 import manager.Managers;
 import manager.TaskManager;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class SubtaskTest {
     @Test
-    public void subtaskObjectCannotAddedToItself() {
+    public void subtaskObjectCannotAddedToItself() throws ManagerSaveException {
         TaskManager taskManager = Managers.getDefault();
 
         Epic epic = new Epic("Эпик", "Описание");

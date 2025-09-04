@@ -5,12 +5,12 @@ import task.*;
 import java.io.*;
 import java.util.List;
 
-public class FileBackedTaskManager extends InMemoryTaskManager implements TaskManager {
+public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private final File file;
 
-    public FileBackedTaskManager(File f) {
-        this.file = f;
+    public FileBackedTaskManager(File dataFile) {
+        this.file = dataFile;
     }
 
     public static FileBackedTaskManager loadFromFile(File file) throws ManagerSaveException {
@@ -67,8 +67,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
                 return epic;
             case TaskType.SUBTASK:
                 int idEpic = Integer.parseInt(specifications[5]);
-                epic = super.getEpicById(idEpic);
-                Subtask subtask = new Subtask(epic, name, description, status);
+                Epic epicForSubtask = super.getEpicById(idEpic);
+                Subtask subtask = new Subtask(epicForSubtask, name, description, status);
                 subtask.setId(id);
                 return subtask;
             case TaskType.TASK:

@@ -35,12 +35,12 @@ class FileBackedTaskManagerTest {
 
     @Test
     public void addTasksToFile() throws IOException {
-        String text = "";
+        StringBuilder text = new StringBuilder();
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             bufferedReader.readLine();
             while (bufferedReader.ready()) {
-                text += bufferedReader.readLine();
+                text.append(bufferedReader.readLine());
             }
         } catch (IOException e) {
             throw new ManagerSaveException(e);
@@ -48,7 +48,7 @@ class FileBackedTaskManagerTest {
 
         assertEquals("1,TASK,Задача,NEW,Описание," +
                 "2,EPIC,Эпик,NEW,Описание," +
-                "3,SUBTASK,Подзадача,NEW,Описание,2", text);
+                "3,SUBTASK,Подзадача,NEW,Описание,2", text.toString());
     }
 
     @Test

@@ -1,5 +1,6 @@
 package task;
 
+import manager.ManagerSaveException;
 import manager.Managers;
 import manager.TaskManager;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class EpicTest {
     @Test
-    public void epicObjectCannotAddedToItself() {
+    public void epicObjectCannotAddedToItself() throws ManagerSaveException {
         TaskManager taskManager = Managers.getDefault();
 
         Epic epic = new Epic("Эпик", "Описание");

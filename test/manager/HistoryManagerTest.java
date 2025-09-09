@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HistoryManagerTest {
     @Test
-    void theHistoryShouldNotContainAPreliminaryVersionOfTheIssue() {
+    void theHistoryShouldNotContainAPreliminaryVersionOfTheIssue() throws ManagerSaveException {
         TaskManager manager = Managers.getDefault();
 
         Task task = new Task("Задача", "Описание");
@@ -26,7 +26,7 @@ class HistoryManagerTest {
     }
 
     @Test
-    void checkingTheOperationOfTheTaskHistoryListFunction() {
+    void checkingTheOperationOfTheTaskHistoryListFunction() throws ManagerSaveException {
         TaskManager manager = Managers.getDefault();
 
         Task task_1 = new Task("Задача_1", "Описание_1");
@@ -53,7 +53,7 @@ class HistoryManagerTest {
     }
 
     @Test
-    void checkingTheTaskDeletionFunction() {
+    void checkingTheTaskDeletionFunction() throws ManagerSaveException {
         TaskManager manager = Managers.getDefault();
 
         Task task_1 = new Task("Задача_1", "Описание_1");
@@ -77,7 +77,7 @@ class HistoryManagerTest {
     }
 
     @Test
-    void checkingToGetRidOfDuplicatesPerHour() {
+    void checkingToGetRidOfDuplicatesPerHour() throws ManagerSaveException {
         TaskManager manager = Managers.getDefault();
 
         Task task_1 = new Task("Задача_1", "Описание_1");

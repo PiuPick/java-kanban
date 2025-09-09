@@ -9,40 +9,38 @@ import static org.junit.jupiter.api.Assertions.*;
 class InMemoryTaskManagerTest {
     private static TaskManager taskManager;
     private static Task task;
-    private static Epic epic;
-    private static Subtask subtask;
 
     @BeforeAll
-    public static void beforeAll() {
+    public static void beforeAll() throws ManagerSaveException {
         taskManager = Managers.getDefault();
 
         task = new Task("Задача", "Описание");
         taskManager.createTask(task);
 
-        epic = new Epic("Эпик", "Описание");
+        Epic epic = new Epic("Эпик", "Описание");
         taskManager.createEpic(epic);
 
-        subtask = new Subtask(epic, "Подзадача", "Описание");
+        Subtask subtask = new Subtask(epic, "Подзадача", "Описание");
         taskManager.createSubtask(subtask);
     }
 
     @Test
     public void addTasks() {
-        assertEquals(taskManager.getTaskById(1).getType(), TaskType.TASK);
+        assertEquals(TaskType.TASK, taskManager.getTaskById(1).getType());
     }
 
     @Test
     public void addEpic() {
-        assertEquals(taskManager.getEpicById(2).getType(), TaskType.EPIC);
+        assertEquals(TaskType.EPIC, taskManager.getEpicById(2).getType());
     }
 
     @Test
     public void addSubtask() {
-        assertEquals(taskManager.getSubtaskById(3).getType(), TaskType.SUBTASK);
+        assertEquals(TaskType.SUBTASK, taskManager.getSubtaskById(3).getType());
     }
 
     @Test
-    public void conflictBetweenGeneratedIdAndManuallyCreatedOne() {
+    public void conflictBetweenGeneratedIdAndManuallyCreatedOne() throws ManagerSaveException {
         Task taskConflict = new Task("Задача со своим ID", "Описание");
         taskConflict.setId(1);
         taskManager.createTask(taskConflict);
@@ -51,14 +49,14 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void immutabilityOfTheTask() {
+    public void immutabilityOfTheTask() throws ManagerSaveException {
         Task taskUnchanging = new Task("Задача 123", "Описание 123");
 
         taskManager.createTask(taskUnchanging);
 
-        assertEquals(taskUnchanging.getName(), "Задача 123");
-        assertEquals(taskUnchanging.getDescription(), "Описание 123");
-        assertEquals(taskUnchanging.getStatus(), Status.NEW);
-        assertNotNull(taskUnchanging.getId());
+        assertEquals("Задача 123", taskUnchanging.getName());
+        assertEquals("Описание 123", taskUnchanging.getDescription());
+        assertEquals(Status.NEW, taskUnchanging.getStatus());
+        assertTrue(taskUnchanging.getId() > 0);
     }
 }

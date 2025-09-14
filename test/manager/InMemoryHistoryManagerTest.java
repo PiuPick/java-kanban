@@ -2,7 +2,7 @@ package manager;
 
 import org.junit.jupiter.api.BeforeEach;
 
-class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
+class InMemoryHistoryManagerTest extends TaskManagerTest<InMemoryTaskManager> {
     private static TaskManager taskManager;
 
     @Override

@@ -1,9 +1,10 @@
 package task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Epic extends Task {
-    private ArrayList<Integer> subtasks = new ArrayList<>();
+    private List<Integer> subtasks = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);
@@ -13,7 +14,7 @@ public class Epic extends Task {
         subtasks.add(id);
     }
 
-    public ArrayList<Integer> getSubtasks() {
+    public List<Integer> getSubtasks() {
         return subtasks;
     }
 
@@ -22,8 +23,10 @@ public class Epic extends Task {
         Epic clone = new Epic(this.getName(), this.getDescription());
         clone.setId(this.getId());
         clone.setStatus(this.getStatus());
+        clone.setStartTime(this.getStartTime());
+        clone.setDuration(this.getDuration());
 
-        for (Integer subtask : subtasks) {
+        for (Integer subtask : this.subtasks) {
             clone.addSubtaskId(subtask);
         }
 

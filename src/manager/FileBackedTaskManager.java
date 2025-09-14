@@ -9,6 +9,7 @@ import java.util.List;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
+
     public FileBackedTaskManager(File dataFile) {
         this.file = dataFile;
     }

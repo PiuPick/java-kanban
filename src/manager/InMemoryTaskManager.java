@@ -165,7 +165,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void clearEpics() throws ManagerSaveException {
-        for (Integer id : epics.keySet().stream().toList()) {
+        for (Integer id : epics.keySet()) {
             deleteEpicById(id);
         }
     }

@@ -158,7 +158,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void clearTasks() throws ManagerSaveException {
-        for (Integer id : tasks.keySet().stream().toList()) {
+        for (Integer id : tasks.keySet()) {
             deleteTaskById(id);
         }
     }
@@ -172,7 +172,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void clearSubtasks() throws ManagerSaveException {
-        for (Integer id : subtasks.keySet().stream().toList()) {
+        for (Integer id : subtasks.keySet()) {
             deleteSubtaskById(id);
         }
     }

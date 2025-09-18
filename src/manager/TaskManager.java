@@ -7,6 +7,8 @@ import task.Task;
 import java.util.List;
 
 public interface TaskManager {
+    List<Task> getPrioritizedTasks();
+
     List<Subtask> getSubtasks(int idEpic);
 
     void updateTask(Task task) throws ManagerSaveException;

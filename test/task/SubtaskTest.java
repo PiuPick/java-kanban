@@ -14,10 +14,11 @@ class SubtaskTest {
 
         Epic epic = new Epic("Эпик", "Описание");
         epic.setId(1);
-        taskManager.createEpic(epic);
 
         Subtask subtask = new Subtask(epic, "Подзадача", "Описание");
         subtask.setId(1);
+
+        taskManager.createEpic(epic);
         taskManager.createSubtask(subtask);
 
         assertNotEquals(taskManager.getSubtasks().getFirst(), taskManager.getEpics().getFirst());

@@ -9,8 +9,6 @@ import task.Task;
 public class Main {
 
     public static void main(String[] args) throws ManagerSaveException {
-        System.out.println("Поехали!\n");
-
         TaskManager taskManager = Managers.getDefault();
 
         System.out.println("1) Создание двух независимых задач");
@@ -39,16 +37,16 @@ public class Main {
         System.out.println("Subtasks: " + taskManager.getSubtasks() + '\n');
 
         System.out.println("5) Проверка статуса первого эпика до и после выполнения одной из подзадач");
-        System.out.println("holidayTask status befoe one DONE: " + holidayTask.getStatus());
+        System.out.println("holidayTask status befoe one DONE: " + taskManager.getEpicById(holidayTask.getId()).getStatus());
         productsBuyTask.setStatus(Status.DONE);
         taskManager.updateTask(productsBuyTask);
-        System.out.println("holidayTask status after one DONE: " + holidayTask.getStatus() + '\n');
+        System.out.println("holidayTask status after one DONE: " + taskManager.getEpicById(holidayTask.getId()).getStatus() + '\n');
 
         System.out.println("6) Проверка статуса второго эпика до и после выполнения единственной подзадачи");
-        System.out.println("houseBuyTask status before: " + houseBuyTask.getStatus());
+        System.out.println("houseBuyTask status before DONE: " + taskManager.getEpicById(houseBuyTask.getId()).getStatus());
         searchRealtorTask.setStatus(Status.DONE);
         taskManager.updateTask(searchRealtorTask);
-        System.out.println("houseBuyTask status after DONE: " + houseBuyTask.getStatus() + '\n');
+        System.out.println("houseBuyTask status after DONE: " + taskManager.getEpicById(houseBuyTask.getId()).getStatus() + '\n');
 
         System.out.println("7) Удаление одной независимой задачи и большого эпика");
         System.out.println("До удаления: Tasks=" + taskManager.getTasks().size() +
@@ -67,7 +65,7 @@ public class Main {
         System.out.println("После удаления: Tasks=" + taskManager.getTasks().size() +
                 ", Epics=" + taskManager.getEpics().size() +
                 ", Subtasks=" + taskManager.getSubtasks().size() + '\n' +
-                "houseBuyTask status after delete subtask: " + houseBuyTask.getStatus() + '\n');
+                "houseBuyTask status after delete subtask: " + taskManager.getEpicById(houseBuyTask.getId()).getStatus() + '\n');
 
         System.out.println("9) Заполнение раннее удаленных задач, эпиков и подзадач\n");
         taskManager.createTask(emailTask);

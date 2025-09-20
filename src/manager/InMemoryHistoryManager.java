@@ -22,33 +22,37 @@ public class InMemoryHistoryManager implements HistoryManager {
     public void add(Task task) {
         if (task == null) return;
 
-        removeNode(task);
+        remove(task.getId());
         hashMapTasksHistory.put(task.getId(), linkLast(task));
     }
 
     @Override
     public void remove(int id) {
-        removeNode(hashMapTasksHistory.get(id).getData());
+        Node<Task> node = hashMapTasksHistory.get(id);
+        if (node != null) {
+            removeNode(node.getData());
+            hashMapTasksHistory.remove(id);
+        }
     }
 
     private void removeNode(Task task) {
-        if (hashMapTasksHistory.containsKey(task.getId())) {
-            Node<Task> node = hashMapTasksHistory.get(task.getId());
+        Node<Task> node = hashMapTasksHistory.get(task.getId());
 
-            if (node.getPrev() != null) {
-                Node<Task> prev = node.getPrev();
-                prev.setNext(node.getNext());
-            } else {
-                headList = node.getNext();
-            }
-            if (node.getNext() != null) {
-                Node<Task> next = node.getNext();
-                next.setPrev(node.getPrev());
-            }
-
-            hashMapTasksHistory.remove(node.getData().getId());
-            --sizeList;
+        if (node.getPrev() != null) {
+            Node<Task> prev = node.getPrev();
+            prev.setNext(node.getNext());
+        } else {
+            headList = node.getNext();
         }
+
+        if (node.getNext() != null) {
+            Node<Task> next = node.getNext();
+            next.setPrev(node.getPrev());
+        } else {
+            tailList = node.getPrev();
+        }
+
+        --sizeList;
     }
 
     private Node<Task> linkLast(Task task) {
@@ -70,13 +74,12 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private List<Task> getTasks() {
         List<Task> tasksArrayList = new ArrayList<>();
-        Node<Task> node = headList;
 
-        do {
+        Node<Task> node = headList;
+        while (node != null) {
             tasksArrayList.add(node.getData());
             node = node.getNext();
-        } while (node != null);
-
+        }
         return tasksArrayList;
     }
 }

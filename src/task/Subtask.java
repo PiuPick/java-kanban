@@ -14,12 +14,17 @@ public class Subtask extends Task {
     }
 
     public Epic getEpic() {
-        return epic;
+        return epic.cloneTask();
     }
 
     @Override
     public Subtask cloneTask() {
-        return new Subtask(this.getEpic().cloneTask(), this.getName(), this.getDescription(), this.getStatus());
+        Subtask clone = new Subtask(this.getEpic().cloneTask(), this.getName(), this.getDescription(), this.getStatus());
+        clone.setId(this.getId());
+        clone.setStartTime(this.getStartTime());
+        clone.setDuration(this.getDuration());
+
+        return clone;
     }
 
     @Override

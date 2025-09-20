@@ -2,99 +2,106 @@ package manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import task.*;
+import task.Epic;
+import task.Subtask;
+import task.Task;
 
-import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FileBackedTaskManagerTest {
-    private static TaskManager taskManager;
-    private static File file;
-    private static Task task;
-    private static Epic epic;
-    private static Subtask subtask;
+class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
+    private TaskManager taskManager;
+    private File file;
+    private Task task;
+    private Epic epic;
+    private Subtask subtask;
+
+    @Override
+    protected FileBackedTaskManager createTaskManager() throws IOException {
+        file = File.createTempFile("data", ".csv");
+        return new FileBackedTaskManager(file);
+    }
 
     @BeforeEach
     public void beforeEach() throws IOException {
-        file = File.createTempFile("data", ".csv");
-        taskManager = Managers.getDefaultManagerFile(file);
+        taskManager = createTaskManager();
 
         task = new Task("Задача", "Описание");
-        taskManager.createTask(task);
+        task.setStartTime(LocalDateTime.of(2025, 10, 1, 18, 0));
+        task.setDuration(Duration.ofHours(2).plusMinutes(15));
 
         epic = new Epic("Эпик", "Описание");
-        taskManager.createEpic(epic);
 
         subtask = new Subtask(epic, "Подзадача", "Описание");
+        subtask.setStartTime(LocalDateTime.of(2025, 12, 31, 23, 55));
+        subtask.setDuration(Duration.ofMinutes(5));
+
+        taskManager.createTask(task);
+        taskManager.createEpic(epic);
         taskManager.createSubtask(subtask);
     }
 
     @Test
-    public void addTasksToFile() throws IOException {
-        StringBuilder text = new StringBuilder();
+    void loadFromEmptyFile() throws IOException {
+        File emptyFile = File.createTempFile("empty", ".csv");
+        taskManager = FileBackedTaskManager.loadFromFile(emptyFile);
 
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
-            bufferedReader.readLine();
-            while (bufferedReader.ready()) {
-                text.append(bufferedReader.readLine());
-            }
-        } catch (IOException e) {
-            throw new ManagerSaveException(e);
-        }
+        assertTrue(taskManager.getTasks().isEmpty());
+        assertTrue(taskManager.getEpics().isEmpty());
+        assertTrue(taskManager.getSubtasks().isEmpty());
+    }
 
-        assertEquals("1,TASK,Задача,NEW,Описание," +
-                "2,EPIC,Эпик,NEW,Описание," +
-                "3,SUBTASK,Подзадача,NEW,Описание,2", text.toString());
+    @Test
+    void saveAndLoadWithTimeParameters() throws IOException {
+        File file = File.createTempFile("timeTest", ".csv");
+        FileBackedTaskManager manager = new FileBackedTaskManager(file);
+
+        manager.createTask(task);
+
+        FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(file);
+        Task loadedTask = loadedManager.getTaskById(task.getId());
+
+        assertEquals(task.getStartTime(), loadedTask.getStartTime());
+        assertEquals(task.getDuration(), loadedTask.getDuration());
+        assertEquals(task.getEndTime(), loadedTask.getEndTime());
     }
 
     @Test
     public void loadFromFile() throws ManagerSaveException {
         TaskManager taskManagerLoader = Managers.getDefaultManagerFile(file);
 
-        System.out.println(task.getDescription());
-
         assertEquals(taskManagerLoader.getTaskById(1).getDescription(), task.getDescription());
+        assertEquals(taskManagerLoader.getTaskById(1).getStartTime(), task.getStartTime());
+        assertEquals(taskManagerLoader.getTaskById(1).getDuration(), task.getDuration());
+
         assertEquals(taskManagerLoader.getEpicById(2).getDescription(), epic.getDescription());
+        assertEquals(taskManagerLoader.getEpicById(2).getStartTime(), subtask.getStartTime());
+        assertEquals(taskManagerLoader.getEpicById(2).getDuration(), subtask.getDuration());
+
         assertEquals(taskManagerLoader.getSubtaskById(3).getDescription(), subtask.getDescription());
+        assertEquals(taskManagerLoader.getSubtaskById(3).getStartTime(), subtask.getStartTime());
+        assertEquals(taskManagerLoader.getSubtaskById(3).getDuration(), subtask.getDuration());
     }
 
     @Test
-    public void addTasks() {
-        assertEquals(TaskType.TASK, taskManager.getTaskById(1).getType());
-    }
+    public void checkingForAnIncorrectEpicId() throws IOException {
+        File file = File.createTempFile("incorrectData", ".csv");
 
-    @Test
-    public void addEpic() {
-        assertEquals(TaskType.EPIC, taskManager.getEpicById(2).getType());
-    }
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
+            bufferedWriter.write("id,type,name,status,description,startTime,duration,epic\n" +
+                    "1,TASK,Задача,NEW,Описание,2024-01-15T10:00,PT2H,\n" +
+                    "2,EPIC,Эпик,NEW,Описание,null,null,\n" +
+                    "3,SUBTASK,Подзадача,NEW,Описание,2025-09-15T02:00,PT6H,777\n");
+        }
 
-    @Test
-    public void addSubtask() {
-        assertEquals(TaskType.SUBTASK, taskManager.getSubtaskById(3).getType());
-    }
-
-    @Test
-    public void conflictBetweenGeneratedIdAndManuallyCreatedOne() throws ManagerSaveException {
-        Task taskConflict = new Task("Задача со своим ID", "Описание");
-        taskConflict.setId(1);
-        taskManager.createTask(taskConflict);
-
-        assertNotEquals(task.getId(), taskConflict.getId());
-    }
-
-    @Test
-    public void immutabilityOfTheTask() throws ManagerSaveException {
-        Task taskUnchanging = new Task("Задача 123", "Описание 123");
-
-        taskManager.createTask(taskUnchanging);
-
-        assertEquals("Задача 123", taskUnchanging.getName());
-        assertEquals("Описание 123", taskUnchanging.getDescription());
-        assertEquals(Status.NEW, taskUnchanging.getStatus());
-        assertTrue(taskUnchanging.getId() > 0);
+        assertThrows(IllegalArgumentException.class, () -> {
+            taskManager = FileBackedTaskManager.loadFromFile(file);
+        });
     }
 }

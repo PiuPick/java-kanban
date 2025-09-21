@@ -158,21 +158,24 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void clearTasks() throws ManagerSaveException {
-        for (Integer id : tasks.keySet()) {
+        while (!tasks.isEmpty()) {
+            Integer id = tasks.keySet().iterator().next();
             deleteTaskById(id);
         }
     }
 
     @Override
     public void clearEpics() throws ManagerSaveException {
-        for (Integer id : epics.keySet()) {
+        while (!epics.isEmpty()) {
+            Integer id = epics.keySet().iterator().next();
             deleteEpicById(id);
         }
     }
 
     @Override
     public void clearSubtasks() throws ManagerSaveException {
-        for (Integer id : subtasks.keySet()) {
+        while (!subtasks.isEmpty()) {
+            Integer id = subtasks.keySet().iterator().next();
             deleteSubtaskById(id);
         }
     }

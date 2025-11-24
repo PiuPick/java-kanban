@@ -182,12 +182,16 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteTaskById(int id) throws ManagerSaveException {
+        Task task = getTaskById(id);
+
         priorityTasks.remove(tasks.remove(id));
         historyManager.remove(id);
     }
 
     @Override
     public void deleteEpicById(int id) throws ManagerSaveException {
+        Epic epic = getEpicById(id);
+
         epics.remove(id)
                 .getSubtasks()
                 .forEach(subtaskId -> {
@@ -199,7 +203,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteSubtaskById(int id) throws ManagerSaveException {
-        Subtask subtask = subtasks.get(id);
+        Subtask subtask = getSubtaskById(id);
 
         subtasks.remove(id);
         historyManager.remove(id);
@@ -253,22 +257,34 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(int id) {
         Task task = tasks.get(id);
-        historyManager.add(task);
-        return task.cloneTask();
+        if (task == null)
+            throw new NotFoundException("Task with id " + id + " not found");
+        else {
+            historyManager.add(task);
+            return task.cloneTask();
+        }
     }
 
     @Override
     public Epic getEpicById(int id) {
         Epic epic = epics.get(id);
-        historyManager.add(epic);
-        return epic.cloneTask();
+        if (epic == null)
+            throw new NotFoundException("Epic with id " + id + " not found");
+        else {
+            historyManager.add(epic);
+            return epic.cloneTask();
+        }
     }
 
     @Override
     public Subtask getSubtaskById(int id) {
         Subtask subtask = subtasks.get(id);
-        historyManager.add(subtask);
-        return subtask.cloneTask();
+        if (subtask == null)
+            throw new NotFoundException("Subtask with id " + id + " not found");
+        else {
+            historyManager.add(subtask);
+            return subtask.cloneTask();
+        }
     }
 
     @Override

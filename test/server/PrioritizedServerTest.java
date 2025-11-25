@@ -37,7 +37,6 @@ public class PrioritizedServerTest {
         manager.clearTasks();
         manager.clearSubtasks();
         manager.clearEpics();
-
         server.start();
         client = HttpClient.newHttpClient();
     }
@@ -151,7 +150,7 @@ public class PrioritizedServerTest {
         URI del = URI.create("http://localhost:8080/tasks/" + t2.getId());
         HttpRequest delReq = HttpRequest.newBuilder().uri(del).DELETE().build();
         HttpResponse<String> delResp = client.send(delReq, HttpResponse.BodyHandlers.ofString());
-        assertEquals(200, delResp.statusCode());
+        assertEquals(201, delResp.statusCode());
 
         HttpRequest req2 = HttpRequest.newBuilder().uri(url).GET().build();
         HttpResponse<String> resp2 = client.send(req2, HttpResponse.BodyHandlers.ofString());

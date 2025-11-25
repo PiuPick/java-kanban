@@ -25,8 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class TasksServerTest {
     private final TaskManager manager = new InMemoryTaskManager();
     private final HttpTaskServer server = new HttpTaskServer(manager);
+    private final Gson gson = HttpTaskServer.getGson();
     private final URI url = URI.create("http://localhost:8080/tasks");
-    Gson gson = HttpTaskServer.getGson();
     private HttpClient client;
 
     public TasksServerTest() throws IOException {
@@ -38,7 +38,6 @@ public class TasksServerTest {
         manager.clearSubtasks();
         manager.clearEpics();
         server.start();
-
         client = HttpClient.newHttpClient();
     }
 
@@ -151,7 +150,7 @@ public class TasksServerTest {
         HttpResponse<String> response =
                 client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        assertEquals(200, response.statusCode());
+        assertEquals(201, response.statusCode());
         assertEquals(0, manager.getTasks().size());
     }
 

@@ -38,7 +38,6 @@ public class SubtasksServerTest {
         manager.clearTasks();
         manager.clearSubtasks();
         manager.clearEpics();
-
         server.start();
         client = HttpClient.newHttpClient();
     }
@@ -144,7 +143,7 @@ public class SubtasksServerTest {
         HttpRequest request = HttpRequest.newBuilder().uri(delUrl).DELETE().build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        assertEquals(200, response.statusCode());
+        assertEquals(201, response.statusCode());
         assertEquals(0, manager.getSubtasks().size());
     }
 }

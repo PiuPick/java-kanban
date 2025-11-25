@@ -20,7 +20,7 @@ public class HistoryHandler extends BaseHttpHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {
-            String method = exchange.getRequestMethod();
+            Method method = Method.valueOf(exchange.getRequestMethod());
             String path = exchange.getRequestURI().getPath();
 
             if (!path.equals("/history")) {
@@ -28,7 +28,7 @@ public class HistoryHandler extends BaseHttpHandler implements HttpHandler {
                 return;
             }
 
-            if (method.equals("GET"))
+            if (method == Method.GET)
                 sendText(exchange, gson.toJson(manager.getHistory()), 200);
             else
                 sendServerError(exchange, "Метод не поддерживается");
